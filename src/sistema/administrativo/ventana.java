@@ -161,10 +161,6 @@ public class ventana extends JFrame {
         JButton btnAdminProductos = new JButton("Administración de Productos");
         btnAdminProductos.setBounds(160, 70, 250, 26);
         panelControl.add(btnAdminProductos);
-
-        JButton btnReportes = new JButton("Reportes");
-        btnReportes.setBounds(160, 130, 250, 26);
-        panelControl.add(btnReportes);
     }
 
     public void crearUsuario() {
@@ -329,7 +325,6 @@ public class ventana extends JFrame {
                 JFileChooser VentanaSeleccion = new JFileChooser();
                 VentanaSeleccion.showOpenDialog(null);
                 archivoSeleccionado = VentanaSeleccion.getSelectedFile();
-                //System.out.println("La ubicación del archivo es " + archivoSeleccionado.getPath());
                 if(archivoSeleccionado == null){
                     JOptionPane.showMessageDialog(null,"Cancelado");
                 }else{
@@ -353,18 +348,77 @@ public class ventana extends JFrame {
         };
         btnReporte.addActionListener(crearHTML);
         
+        JButton btnVolver = new JButton("Volver al Menú");
+        btnVolver.setBounds(419, 50, 200, 25);
+        panelControlClientes.add(btnVolver);
+        ActionListener volverInicio = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelControl.setVisible(true);
+                panelControlClientes.setVisible(false);
+                volverInicio();
+            }
+        };
+        btnVolver.addActionListener(volverInicio);
+        
+    }
+    
+    public void ordenar(){
+        cliente auxiliar;
+        for(int i=0; i<99; i++){
+            for(int j = 0; j<99; j++){
+                if(clientes[j+1] == null){
+                break;
+               }else{
+                    if(clientes[j].edad> clientes[j+1].edad){
+                        auxiliar = clientes[j+1];
+                        clientes[j+1] = clientes[j];
+                        clientes[j] = auxiliar;
+                    }
+                }
+            }
+        }
     }
     
     public void crearReporte(){
         try{
+            ordenar();
+            PrintWriter escribirCSS = new PrintWriter("reportes/estilo.css", "UTF-8");
+            escribirCSS.println("html {  font-size: 20px; font-family: 'Open Sans', sans-serif; }");
+            escribirCSS.println("h1 {  font-size: 60px; text-align: center; }");
+            escribirCSS.println("p, li {  font-size: 16px;  line-height: 2;  letter-spacing: 1px; }");
+            escribirCSS.println("table {  table-layout: fixed;  width:250px;}  td{border: 1px solid black; width: 190px; word-wrap: break-word}");
+            escribirCSS.println("html {  background-color: #00539F; }");
+            escribirCSS.println("body { width: 970px; margin: 0 auto; background-color: #FF9500; padding: 0 20px 20px 20px; border: 5px solid black; } ");
+            escribirCSS.println("h1 { margin: 0; padding: 20px 0; color: #00539F; text-shadow: 3px 3px 1px black; }");
+            escribirCSS.close();
+            
             PrintWriter escribir = new PrintWriter("reportes/index.html", "UTF-8");
             escribir.println("<!doctybe html>");
             escribir.println("<html>");
             escribir.println("<head>");
             escribir.println("<title>Reporte del sistema </title>");
+            escribir.println("<link rel=\"stylesheet\" href=\"estilo.css\">");
             escribir.println("</head>");
-            escribir.println("<body");
+            escribir.println("<body>");
             escribir.println("<h1>Listado de Clientes en el Sistema</h1>");
+            escribir.println("<br>");
+            
+            escribir.println("<table border = 1>");
+            escribir.println("<tr>");
+            escribir.println("<td>NIT</td> <td>NOMBRE</td>  <td>EDAD</td>  <td>GÉNERO</td>");
+            escribir.println("</tr>");
+            
+             for(int i = 0; i<99; i++){
+                if(clientes[i] != null){
+                    escribir.println("<tr>");
+                    escribir.println("<td>" + clientes[i].nit + "</td><td>" + clientes[i].nombre + "</td><td>" + clientes[i].edad + "</td><td>" + clientes[i].genero + "</td>");
+                    escribir.println("</tr>");
+                }            
+           }
+            escribir.println("</table>");
+
+             
             escribir.println("</body>");
             escribir.println("</html>");
             escribir.close();
