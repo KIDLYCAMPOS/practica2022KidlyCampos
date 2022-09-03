@@ -72,7 +72,7 @@ public class ventana extends JFrame {
         productos[0] = new producto();
         productos[0].nombre = "Producto 1";
         productos[0].cantidad = 6;
-        productos[0].precio = 30;
+        productos[0].precio = 100;
     }
 
     public void objetos() {
@@ -573,10 +573,11 @@ public class ventana extends JFrame {
         barraTablaProductos.setBounds(10, 10, 300, 100);
         panelControlProductos.add(barraTablaProductos);
         
-            DefaultCategoryDataset datos2 = new DefaultCategoryDataset();
-        datos2.addValue(rango18a30(), "1-50", "cantidad");
-        datos2.addValue(rango31a45(), "51-99", "cantidad");
-        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Cantidades", "cantidad", "Precio", datos2, PlotOrientation.VERTICAL, true, true, false);
+        DefaultCategoryDataset datos3 = new DefaultCategoryDataset();
+        datos3.addValue(rango18a30(), "100-500", "Precio");
+        datos3.addValue(rango31a45(), "600-1000", "Precio");
+        datos3.addValue(rango31a45(), "Mayor a 1000", "Precio");
+        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Precios", "Precio", "Escala", datos3, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
         panelColumnas.setBounds(400, 120, 300, 300);
         panelControlProductos.add(panelColumnas);
@@ -594,15 +595,14 @@ public class ventana extends JFrame {
                 if (archivoSeleccionado == null) {
                     JOptionPane.showMessageDialog(null, "Cancelado");
                 } else {
-                    leerArchivoCSV(archivoSeleccionado.getPath());
+                    leerArchivoCSV2(archivoSeleccionado.getPath());
                     panelControlProductos.setVisible(false);
                     panelControlPro();
                 }
             }
         };
         btnCargarArchivo2.addActionListener(buscarArchivo);
-    }
-
+    }           
     public void leerArchivoCSV2(String ruta) {
         try {
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
