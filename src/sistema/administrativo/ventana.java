@@ -602,9 +602,18 @@ public class ventana extends JFrame {
             }
         };
         btnCargarArchivo2.addActionListener(buscarArchivo); 
-    
+ 
+        JButton btnReporte = new JButton("Crear Reporte HTML");
+        btnReporte.setBounds(520, 10, 200, 25);
+        panelControlProductos.add(btnReporte);
+        ActionListener crearHTML = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                crearReporte();
+            }
+        };
+        btnReporte.addActionListener(crearHTML);
         
-    { 
         JButton btnVolver = new JButton("Volver al Menú");
         btnVolver.setBounds(312, 50, 200, 25);
         panelControlProductos.add(btnVolver);
@@ -617,8 +626,54 @@ public class ventana extends JFrame {
             }
         };
         btnVolver.addActionListener(volverInicio);
-    }  
     }
+    
+
+   public void crearReporte2(){
+       try {
+            PrintWriter escribirCSS = new PrintWriter("reportes2/estilo.css", "UTF-8");
+            escribirCSS.println("html {  font-size: 20px; font-family: 'Open Sans', sans-serif; }");
+            escribirCSS.println("h1 {  font-size: 60px; text-align: center; }");
+            escribirCSS.println("p, li {  font-size: 16px;  line-height: 2;  letter-spacing: 1px; }");
+            escribirCSS.println("table {  table-layout: fixed;  width:250px;}  td{border: 1px solid black; width: 190px; word-wrap: break-word}");
+            escribirCSS.println("html {  background-color: #00539F; }");
+            escribirCSS.println("body { width: 970px; margin: 0 auto; background-color: #FF9500; padding: 0 20px 20px 20px; border: 5px solid black; } ");
+            escribirCSS.println("h1 { margin: 0; padding: 20px 0; color: #00539F; text-shadow: 3px 3px 1px black; }");
+            escribirCSS.close();
+
+            PrintWriter escribir = new PrintWriter("reportes2/index.html", "UTF-8");
+            escribir.println("<!doctybe html>");
+            escribir.println("<html>");
+            escribir.println("<head>");
+            escribir.println("<title>Reporte del sistema </title>");
+            escribir.println("<link rel=\"stylesheet\" href=\"estilo.css\">");
+            escribir.println("</head>");
+            escribir.println("<body>");
+            escribir.println("<h1>Listado de Productos en el Sistema</h1>");
+            escribir.println("<br>");
+
+            escribir.println("<table border = 1>");
+            escribir.println("<tr>");
+            escribir.println("<td>NIT</td> <td>NOMBRE</td>  <td>PRECIO</td>  <td>CANTIDAD</td>");
+            escribir.println("</tr>");
+
+            for (int i = 0; i < 99; i++) {
+                if (clientes[i] != null) {
+                    escribir.println("<tr>");
+                    escribir.println("<td>" + productos[i].nombre + "</td><td>" + productos[i].precio + "</td><td>" + productos[i].cantidad + "</td>");
+                    escribir.println("</tr>");
+                }
+            }
+            escribir.println("</table>");
+
+            escribir.println("</body>");
+            escribir.println("</html>");
+            escribir.close();
+            JOptionPane.showMessageDialog(null, "Reporte Creado con Éxito, Se encuentra en la Carpeta REPORTES2");
+        } catch (IOException error) {
+            JOptionPane.showMessageDialog(null, "NO se pudo Cargar el Reporte");
+        }
+   }
     
     public int rango10a100() {
         int total = 0;
