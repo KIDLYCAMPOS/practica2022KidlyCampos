@@ -576,10 +576,10 @@ public class ventana extends JFrame {
         DefaultCategoryDataset datos3 = new DefaultCategoryDataset();
         datos3.addValue(rango18a30(), "100-500", "Precio");
         datos3.addValue(rango31a45(), "600-1000", "Precio");
-        datos3.addValue(rango31a45(), "Mayor a 1000", "Precio");
+        datos3.addValue(rango45mas(), "Mayor a 1000", "Precio");
         JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Precios", "Precio", "Escala", datos3, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
-        panelColumnas.setBounds(400, 120, 300, 300);
+        panelColumnas.setBounds(19, 120, 300, 300);
         panelControlProductos.add(panelColumnas);
 
         JButton btnCargarArchivo2 = new JButton("Buscar Archivo CSV");
@@ -601,8 +601,24 @@ public class ventana extends JFrame {
                 }
             }
         };
-        btnCargarArchivo2.addActionListener(buscarArchivo);
-    }           
+        btnCargarArchivo2.addActionListener(buscarArchivo); 
+    
+        
+    { 
+        JButton btnVolver = new JButton("Volver al Menú");
+        btnVolver.setBounds(312, 50, 200, 25);
+        panelControlProductos.add(btnVolver);
+        ActionListener volverInicio = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                panelControl.setVisible(true);
+                panelControlProductos.setVisible(false);
+                volverInicio();
+            }
+        };
+        btnVolver.addActionListener(volverInicio);
+    }  
+    }
     public void leerArchivoCSV2(String ruta) {
         try {
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
