@@ -609,7 +609,7 @@ public class ventana extends JFrame {
         ActionListener crearHTML = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                crearReporte();
+                crearReporte2();
             }
         };
         btnReporte.addActionListener(crearHTML);
@@ -628,9 +628,26 @@ public class ventana extends JFrame {
         btnVolver.addActionListener(volverInicio);
     }
     
+public void ordenar2() {
+        producto auxiliar;
+        for (int i = 0; i < 99; i++) {
+            for (int j = 0; j < 99; j++) {
+                if (productos[j + 1] == null) {
+                    break;
+                } else {
+                    if (productos[j].precio > productos[j + 1].precio) {
+                        auxiliar = productos[j + 1];
+                        productos[j + 1] = productos[j];
+                        productos[j] = auxiliar;
+                    }
+                }
+            }
+        }
+    }
 
    public void crearReporte2(){
        try {
+            ordenar2();
             PrintWriter escribirCSS = new PrintWriter("reportes2/estilo.css", "UTF-8");
             escribirCSS.println("html {  font-size: 20px; font-family: 'Open Sans', sans-serif; }");
             escribirCSS.println("h1 {  font-size: 60px; text-align: center; }");
@@ -642,7 +659,7 @@ public class ventana extends JFrame {
             escribirCSS.close();
 
             PrintWriter escribir = new PrintWriter("reportes2/index.html", "UTF-8");
-            escribir.println("<!doctybe html>");
+            escribir.println("<!DOCTYPE HTML>");
             escribir.println("<html>");
             escribir.println("<head>");
             escribir.println("<title>Reporte del sistema </title>");
@@ -665,7 +682,7 @@ public class ventana extends JFrame {
                 }
             }
             escribir.println("</table>");
-
+            
             escribir.println("</body>");
             escribir.println("</html>");
             escribir.close();
