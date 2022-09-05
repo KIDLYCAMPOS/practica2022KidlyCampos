@@ -574,9 +574,9 @@ public class ventana extends JFrame {
         panelControlProductos.add(barraTablaProductos);
         
         DefaultCategoryDataset datos3 = new DefaultCategoryDataset();
-        datos3.addValue(rango18a30(), "100-500", "Precio");
-        datos3.addValue(rango31a45(), "600-1000", "Precio");
-        datos3.addValue(rango45mas(), "Mayor a 1000", "Precio");
+        datos3.addValue(rango10a100(), "10-100", "Precio");
+        datos3.addValue(rango101a300(), "101-300", "Precio");
+        datos3.addValue(rango300mas(), "Mayor a 300", "Precio");
         JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Precios", "Precio", "Escala", datos3, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
         panelColumnas.setBounds(19, 120, 300, 300);
@@ -619,6 +619,46 @@ public class ventana extends JFrame {
         btnVolver.addActionListener(volverInicio);
     }  
     }
+    
+    public int rango10a100() {
+        int total = 0;
+        for (int i = 0; i < 100; i++) {
+            if (productos[i] != null) {
+                if (productos[i].precio >= 10 && productos[i].precio <= 100) {
+                    total++;
+                }
+            }
+
+        }
+        return total;
+    }
+    
+    public int rango101a300() {
+        int total = 0;
+        for (int i = 0; i < 100; i++) {
+            if (productos[i] != null) {
+                if (productos[i].precio >= 101 && productos[i].precio <= 300) {
+                    total++;
+                }
+            }
+
+        }
+        return total;
+    }
+    
+    public int rango300mas() {
+        int total = 0;
+        for (int i = 0; i < 100; i++) {
+            if (productos[i] != null) {
+                if (productos[i].precio > 300) {
+                    total++;
+                }
+            }
+
+        }
+        return total;
+    }
+    
     public void leerArchivoCSV2(String ruta) {
         try {
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
