@@ -658,7 +658,7 @@ public class ventana extends JFrame {
             escribir.println("</tr>");
 
             for (int i = 0; i < 99; i++) {
-                if (clientes[i] != null) {
+                if (productos[i] != null) {
                     escribir.println("<tr>");
                     escribir.println("<td>" + productos[i].nombre + "</td><td>" + productos[i].precio + "</td><td>" + productos[i].cantidad + "</td>");
                     escribir.println("</tr>");
